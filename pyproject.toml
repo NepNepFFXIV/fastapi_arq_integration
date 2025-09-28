@@ -1,0 +1,12 @@
+[project]
+name = "fastapi-arq-integration"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi[standard]>=0.117.1",
+    "orjson>=3.11.3",
+    "pydantic-settings>=2.11.0",
+    "ruff>=0.13.2",
+]
