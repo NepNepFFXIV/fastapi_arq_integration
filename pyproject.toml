@@ -6,7 +6,18 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi[standard]>=0.117.1",
+    "mypy>=1.18.2",
     "orjson>=3.11.3",
     "pydantic-settings>=2.11.0",
     "ruff>=0.13.2",
 ]
+
+[tool.ruff.lint]
+extend-select = ["I"]
+
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = "src"
+ignore_missing_imports = true
