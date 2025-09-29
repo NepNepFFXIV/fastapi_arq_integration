@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "arq>=0.26.3",
     "fastapi[standard]>=0.117.1",
     "mypy>=1.18.2",
     "orjson>=3.11.3",

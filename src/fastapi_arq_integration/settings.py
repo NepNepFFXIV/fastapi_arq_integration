@@ -1,3 +1,4 @@
+from pydantic import BaseModel
 from pydantic_settings import (
     BaseSettings,
     PydanticBaseSettingsSource,
@@ -6,7 +7,14 @@ from pydantic_settings import (
 )
 
 
+class RedisConfig(BaseModel):
+    host: str
+    port: int
+
+
 class Settings(BaseSettings):
+    redis: RedisConfig
+
     model_config = SettingsConfigDict(toml_file="config.toml")
 
     @classmethod
