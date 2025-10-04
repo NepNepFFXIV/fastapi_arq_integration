@@ -10,6 +10,7 @@ from pydantic_settings import (
 class RedisConfig(BaseModel):
     host: str
     port: int
+    database: int
 
 
 class Settings(BaseSettings):
