@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, computed_field
+from pydantic_core import MultiHostUrl
 from pydantic_settings import (
     BaseSettings,
     PydanticBaseSettingsSource,
@@ -13,8 +14,44 @@ class RedisConfig(BaseModel):
     database: int
 
 
+class PostgresConfig(BaseModel):
+    host: str
+    port: int
+    user: str
+    password: str
+    db_name: str
+    db_schema: str
+    min_connections: int = 10
+    max_connections: int = 20
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def alembic_postgres_url(self) -> str:
+        return MultiHostUrl.build(
+            scheme="postgresql+asyncpg",
+            host=self.host,
+            port=self.port,
+            username=self.user,
+            password=self.password,
+            path=self.db_name,
+        ).unicode_string()
+
+    @computed_field  # type: ignore[prop-decorator]
+    @property
+    def postgres_url(self) -> str:
+        return MultiHostUrl.build(
+            scheme="postgresql",
+            host=self.host,
+            port=self.port,
+            username=self.user,
+            password=self.password,
+            path=self.db_name,
+        ).unicode_string()
+
+
 class Settings(BaseSettings):
     redis: RedisConfig
+    postgres: PostgresConfig
 
     model_config = SettingsConfigDict(toml_file="config.toml")
 
