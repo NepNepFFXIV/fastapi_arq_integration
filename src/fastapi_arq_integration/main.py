@@ -20,10 +20,14 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
 
 
 def create_app() -> FastAPI:
+    from src.fastapi_arq_integration.api.router import router
+
     app = FastAPI(
         lifespan=lifespan,
         default_response_class=ORJSONResponse,
     )
+
+    app.include_router(router)
 
     return app
 
