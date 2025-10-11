@@ -1,5 +1,6 @@
 from arq.connections import RedisSettings
 
+from src.fastapi_arq_integration.database import postgres
 from src.fastapi_arq_integration.settings import settings
 
 
@@ -8,11 +9,15 @@ async def run_job(ctx):
 
 
 async def startup(ctx):
-    print("startup")
+    await postgres.connect(
+        settings.postgres.postgres_url,
+        settings.postgres.min_connections,
+        settings.postgres.max_connections,
+    )
 
 
 async def shutdown(ctx):
-    print("shutdown")
+    await postgres.close()
 
 
 class WorkerSettings:

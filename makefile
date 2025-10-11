@@ -6,3 +6,7 @@ run:
 ruff:
 	uv run ruff check --fix
 	uv run ruff format
+
+.PHONY: arq
+arq:
+	uv run arq src.fastapi_arq_integration.worker.WorkerSettings
