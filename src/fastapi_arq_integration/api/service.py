@@ -2,6 +2,7 @@ from random import randint
 
 from src.fastapi_arq_integration.api.models import Operation
 from src.fastapi_arq_integration.api.repository import Repository
+from src.fastapi_arq_integration.redis import redis
 
 
 class Service:
@@ -13,4 +14,7 @@ class Service:
         return await self.repository.select_operation(product_id)
 
     async def insert_operation(self, description: str) -> None:
-        await self.repository.insert_operation(description)
+        await redis.redis_pool.enqueue_job(
+            "insert_operation",
+            description,
+        )

@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
 
 from src.fastapi_arq_integration.database import postgres
+from src.fastapi_arq_integration.redis import redis
 from src.fastapi_arq_integration.settings import settings
 
 
@@ -15,7 +16,13 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None]:
         settings.postgres.min_connections,
         settings.postgres.max_connections,
     )
+    await redis.connect(
+        settings.redis.host,
+        settings.redis.port,
+        settings.redis.database,
+    )
     yield
+    await redis.close()
     await postgres.close()
 
 

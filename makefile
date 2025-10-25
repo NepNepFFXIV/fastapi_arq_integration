@@ -9,4 +9,4 @@ ruff:
 
 .PHONY: arq
 arq:
-	uv run arq src.fastapi_arq_integration.worker.WorkerSettings
+	uv run arq src.fastapi_arq_integration.worker.main.WorkerSettings

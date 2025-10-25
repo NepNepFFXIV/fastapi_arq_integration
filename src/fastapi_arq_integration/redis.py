@@ -32,3 +32,6 @@ class Redis:
         if self._pool is None:
             raise RuntimeError("Redis is not connected")
         return self._pool
+
+
+redis: Redis = Redis()

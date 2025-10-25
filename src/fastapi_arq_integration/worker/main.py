@@ -3,7 +3,7 @@ from arq.connections import RedisSettings
 from src.fastapi_arq_integration.database import postgres
 from src.fastapi_arq_integration.settings import settings
 
-from .functions import function_a, function_b
+from .functions import insert_operation
 
 
 async def startup(ctx):
@@ -19,7 +19,7 @@ async def shutdown(ctx):
 
 
 class WorkerSettings:
-    functions = [function_a, function_b]
+    functions = [insert_operation]
     redis_settings = RedisSettings(
         host=settings.redis.host,
         port=settings.redis.port,
