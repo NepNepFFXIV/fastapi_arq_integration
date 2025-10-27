@@ -1,5 +1,6 @@
 from arq.connections import RedisSettings
 
+from src.fastapi_arq_integration.api.dependency import get_repository
 from src.fastapi_arq_integration.database import postgres
 from src.fastapi_arq_integration.settings import settings
 
@@ -12,6 +13,8 @@ async def startup(ctx):
         settings.postgres.min_connections,
         settings.postgres.max_connections,
     )
+    repository = get_repository()
+    ctx["repository"] = repository
 
 
 async def shutdown(ctx):
@@ -25,3 +28,5 @@ class WorkerSettings:
         port=settings.redis.port,
         database=settings.redis.database,
     )
+    on_startup = startup
+    on_shutdown = shutdown
